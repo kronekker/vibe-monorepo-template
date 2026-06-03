@@ -1,0 +1,28 @@
+{
+  "name": "vibe-backend",
+  "version": "1.0.0",
+  "description": "Express backend server running on Bun with Drizzle ORM",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:push": "drizzle-kit push:sqlite",
+    "db:generate:pg": "drizzle-kit generate:pg",
+    "db:push:pg": "drizzle-kit push:pg"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "drizzle-orm": "^0.29.3",
+    "express": "^4.18.3",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.24",
+    "better-sqlite3": "^12.10.0",
+    "bun-types": "^1.3.14",
+    "drizzle-kit": "^0.20.14",
+    "typescript": "^5.3.3"
+  }
+}

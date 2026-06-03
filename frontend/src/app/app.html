@@ -1,0 +1,53 @@
+<div>
+  @if (appInfo()) {
+    <h1>{{ appInfo()?.name }}</h1>
+    <p>{{ appInfo()?.subtitle }}</p>
+  } @else {
+    <h1>Loading App Info...</h1>
+  }
+
+  @if (error()) {
+    <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0;">
+      <strong>Error:</strong> {{ error() }}
+    </div>
+  }
+
+  <section>
+    <h2>Add User</h2>
+    <div>
+      <label>Name: </label>
+      <input type="text" #nameInput placeholder="John Doe" />
+    </div>
+    <div style="margin-top: 5px;">
+      <label>Email: </label>
+      <input type="email" #emailInput placeholder="john@example.com" />
+    </div>
+    <button style="margin-top: 10px;" (click)="addUser(nameInput, emailInput)">Add User</button>
+  </section>
+
+  <section style="margin-top: 20px;">
+    <h2>User List</h2>
+    <ul>
+      @for (user of users(); track user.id) {
+        <li>
+          <strong>{{ user.name }}</strong> &lt;{{ user.email }}&gt;
+          <small style="color: gray; margin-left: 10px;">Created: {{ user.createdAt }}</small>
+        </li>
+      } @empty {
+        <li>No users in database yet. Add one above!</li>
+      }
+    </ul>
+  </section>
+
+  @if (appInfo()) {
+    <hr style="margin-top: 30px;" />
+    <footer>
+      <h3>System Diagnostics</h3>
+      <ul>
+        <li><strong>Version:</strong> {{ appInfo()?.version }}</li>
+        <li><strong>Runtime Environment:</strong> {{ appInfo()?.runtime }}</li>
+        <li><strong>Database Driver:</strong> {{ appInfo()?.dbType }}</li>
+      </ul>
+    </footer>
+  }
+</div>

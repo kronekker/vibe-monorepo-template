@@ -1,0 +1,22 @@
+{
+  "name": "vibe-monorepo-template",
+  "version": "1.0.0",
+  "description": "Full-stack monorepo template for rapid development with Bun, Express, and Angular.",
+  "scripts": {
+    "bootstrap": "npm install --prefix cli && npm start --prefix cli",
+    "dev": "powershell -File ./serve-dev.ps1",
+    "dev:sh": "./serve-dev.sh",
+    "prod": "powershell -File ./serve-prod.ps1",
+    "prod:sh": "./serve-prod.sh"
+  },
+  "keywords": [
+    "monorepo",
+    "bun",
+    "express",
+    "angular",
+    "drizzle-orm",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT"
+}
