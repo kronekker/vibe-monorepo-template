@@ -289,11 +289,10 @@ async function main() {
     try {
       // Use Bun if available, otherwise fallback to NPM
       const pm = deps.bun.available ? 'bun install' : 'npm install';
-      const cmd = process.platform === 'win32' ? `cmd.exe /c "${pm}"` : pm;
       
-      execSync(cmd, { cwd: backendDir, stdio: 'ignore' });
+      execSync(pm, { cwd: backendDir, stdio: 'ignore', shell: true });
       sInst.message('Installing frontend dependencies (this may take a minute)...');
-      execSync(cmd, { cwd: frontendDir, stdio: 'ignore' });
+      execSync(pm, { cwd: frontendDir, stdio: 'ignore', shell: true });
       sInst.stop('All dependencies installed successfully!');
 
       // Offer to run migrations
@@ -307,8 +306,7 @@ async function main() {
         sMig.start('Initializing database tables...');
         try {
           const runCmd = deps.bun.available ? 'bun run db:push' : 'npm run db:push';
-          const cmd = process.platform === 'win32' ? `cmd.exe /c "${runCmd}"` : runCmd;
-          execSync(cmd, { cwd: backendDir, stdio: 'ignore' });
+          execSync(runCmd, { cwd: backendDir, stdio: 'ignore', shell: true });
           sMig.stop('Database tables initialized successfully!');
         } catch (migErr: any) {
           sMig.stop('Database schema push failed.');
