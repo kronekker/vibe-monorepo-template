@@ -285,14 +285,15 @@ async function main() {
 
   if (runInstall) {
     const sInst = spinner();
-    sInst.start('Installing backend dependencies (this may take a minute)...');
+    const pm = deps.bun.available ? 'bun install' : 'npm install';
+    
+    sInst.start(`[Backend] Running "${pm}" in "${backendDir}"...`);
     try {
-      // Use Bun if available, otherwise fallback to NPM
-      const pm = deps.bun.available ? 'bun install' : 'npm install';
+      execSync(pm, { cwd: backendDir, stdio: 'pipe', shell: true });
       
-      execSync(pm, { cwd: backendDir, stdio: 'ignore', shell: true });
-      sInst.message('Installing frontend dependencies (this may take a minute)...');
-      execSync(pm, { cwd: frontendDir, stdio: 'ignore', shell: true });
+      sInst.message(`[Frontend] Running "${pm}" in "${frontendDir}"...`);
+      execSync(pm, { cwd: frontendDir, stdio: 'pipe', shell: true });
+      
       sInst.stop('All dependencies installed successfully!');
 
       // Offer to run migrations
@@ -303,19 +304,21 @@ async function main() {
 
       if (runMigrate) {
         const sMig = spinner();
-        sMig.start('Initializing database tables...');
+        const runCmd = deps.bun.available ? 'bun run db:push' : 'npm run db:push';
+        sMig.start(`[Database] Running "${runCmd}" in "${backendDir}"...`);
         try {
-          const runCmd = deps.bun.available ? 'bun run db:push' : 'npm run db:push';
-          execSync(runCmd, { cwd: backendDir, stdio: 'ignore', shell: true });
+          execSync(runCmd, { cwd: backendDir, stdio: 'pipe', shell: true });
           sMig.stop('Database tables initialized successfully!');
         } catch (migErr: any) {
           sMig.stop('Database schema push failed.');
-          console.error(pc.yellow(`Warning: Schema push failed: ${migErr.message}. You can run it manually with "npm run db:push" in the backend directory.`));
+          const errMsg = migErr.stderr ? migErr.stderr.toString() : migErr.message;
+          console.error(pc.yellow(`\nWarning: Schema push failed!\nCommand: ${runCmd}\nDirectory: ${backendDir}\nError output:\n${errMsg}\n`));
         }
       }
     } catch (instErr: any) {
       sInst.stop('Dependency installation failed.');
-      console.error(pc.yellow(`Warning: Installation failed: ${instErr.message}. Please navigate into backend/ and frontend/ folders to run install commands manually.`));
+      const errMsg = instErr.stderr ? instErr.stderr.toString() : instErr.message;
+      console.error(pc.yellow(`\nWarning: Installation failed!\nCommand: ${pm}\nDirectory: ${backendDir} / ${frontendDir}\nError output:\n${errMsg}\n`));
     }
   }
 
