@@ -285,14 +285,15 @@ async function main() {
 
   if (runInstall) {
     const sInst = spinner();
-    const pm = deps.bun.available ? 'bun install' : 'npm install';
+    const backendPm = deps.bun.available ? 'bun install' : 'npm install';
+    const frontendPm = 'npm install'; // Angular CLI natively uses NPM and avoids Windows lifecycle bugs in Bun (e.g. msgpackr-extract)
     
-    sInst.start(`[Backend] Running "${pm}" in "${backendDir}"...`);
+    sInst.start(`[Backend] Running "${backendPm}" in "${backendDir}"...`);
     try {
-      execSync(pm, { cwd: backendDir, stdio: 'pipe', shell: true });
+      execSync(backendPm, { cwd: backendDir, stdio: 'pipe', shell: true });
       
-      sInst.message(`[Frontend] Running "${pm}" in "${frontendDir}"...`);
-      execSync(pm, { cwd: frontendDir, stdio: 'pipe', shell: true });
+      sInst.message(`[Frontend] Running "${frontendPm}" in "${frontendDir}"...`);
+      execSync(frontendPm, { cwd: frontendDir, stdio: 'pipe', shell: true });
       
       sInst.stop('All dependencies installed successfully!');
 
@@ -318,7 +319,7 @@ async function main() {
     } catch (instErr: any) {
       sInst.stop('Dependency installation failed.');
       const errMsg = instErr.stderr ? instErr.stderr.toString() : instErr.message;
-      console.error(pc.yellow(`\nWarning: Installation failed!\nCommand: ${pm}\nDirectory: ${backendDir} / ${frontendDir}\nError output:\n${errMsg}\n`));
+      console.error(pc.yellow(`\nWarning: Installation failed!\nCommand: [Dependency Installation]\nDirectory: ${backendDir} / ${frontendDir}\nError output:\n${errMsg}\n`));
     }
   }
 
