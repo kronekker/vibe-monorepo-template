@@ -52,7 +52,17 @@ This project is a boilerplate template designed to be cloned and customized inst
 
 ## 🚀 Quick Start
 
-1. **Clone and open** this repository.
+1. **Clone the template and redirect origins**:
+   ```bash
+   # Clone this template into your custom directory name
+   git clone https://github.com/kronekker/vibe-monorepo-template.git my-new-app
+   
+   # Move into the folder
+   cd my-new-app
+   
+   # Point origin to your own remote repository
+   git remote set-url origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+   ```
 2. **Navigate into the CLI folder** and install bootstrap dependencies:
    ```bash
    cd cli
