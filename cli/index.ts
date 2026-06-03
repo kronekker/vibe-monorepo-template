@@ -176,6 +176,9 @@ async function main() {
     initialValue: true,
   });
 
+  const backendDir = path.join(rootDir, 'backend');
+  const frontendDir = path.join(rootDir, 'frontend');
+
   // 3. Write Configs
   const s = spinner();
   s.start('Applying configuration settings to monorepo files...');
@@ -191,7 +194,6 @@ async function main() {
     }
 
     // B. Update Backend Environment/Config
-    const backendDir = path.join(rootDir, 'backend');
     if (fs.existsSync(backendDir)) {
       // package.json name
       const bPkgPath = path.join(backendDir, 'package.json');
@@ -213,7 +215,6 @@ async function main() {
     }
 
     // C. Update Frontend Angular Proxy/Config
-    const frontendDir = path.join(rootDir, 'frontend');
     if (fs.existsSync(frontendDir)) {
       // package.json name
       const fPkgPath = path.join(frontendDir, 'package.json');
