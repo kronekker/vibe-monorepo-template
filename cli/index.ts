@@ -301,22 +301,29 @@ async function main() {
       sInst.stop('All dependencies installed successfully!');
 
       // Offer to run migrations
-      const runMigrate = await confirm({
-        message: 'Would you like to push the database schema and initialize tables now?',
-        initialValue: true,
-      });
+      if (dbChoice === 'sqlite') {
+        note(
+          `SQLite database tables will be synchronized automatically when you start the backend server.`,
+          'Database Initialization'
+        );
+      } else {
+        const runMigrate = await confirm({
+          message: 'Would you like to push the database schema to your PostgreSQL database now?',
+          initialValue: true,
+        });
 
-      if (runMigrate) {
-        const sMig = spinner();
-        const runCmd = 'npm run db:push';
-        sMig.start(`[Database] Running "${runCmd}" in "${backendDir}"...`);
-        try {
-          execSync(runCmd, { cwd: backendDir, stdio: 'pipe', shell: true });
-          sMig.stop('Database tables initialized successfully!');
-        } catch (migErr: any) {
-          sMig.stop('Database schema push failed.');
-          const errMsg = migErr.stderr ? migErr.stderr.toString() : migErr.message;
-          console.error(pc.yellow(`\nWarning: Schema push failed!\nCommand: ${runCmd}\nDirectory: ${backendDir}\nError output:\n${errMsg}\n`));
+        if (runMigrate) {
+          const sMig = spinner();
+          const runCmd = 'npm run db:push:pg';
+          sMig.start(`[Database] Running "${runCmd}" in "${backendDir}"...`);
+          try {
+            execSync(runCmd, { cwd: backendDir, stdio: 'pipe', shell: true });
+            sMig.stop('PostgreSQL database tables initialized successfully!');
+          } catch (migErr: any) {
+            sMig.stop('Database schema push failed.');
+            const errMsg = migErr.stderr ? migErr.stderr.toString() : migErr.message;
+            console.error(pc.yellow(`\nWarning: Schema push failed!\nCommand: ${runCmd}\nDirectory: ${backendDir}\nError output:\n${errMsg}\n`));
+          }
         }
       }
     } catch (instErr: any) {

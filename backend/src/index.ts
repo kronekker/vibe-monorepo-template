@@ -3,6 +3,19 @@ import cors from 'cors';
 import * as path from 'path';
 import * as fs from 'fs';
 import apiRouter from './routes/api';
+import { db } from './db';
+import { migrate } from 'drizzle-orm/bun-sqlite/migrator';
+
+// Run programmatic SQLite migrations at startup under Bun
+if (process.env.DB_TYPE === 'sqlite' || !process.env.DB_TYPE) {
+  try {
+    console.log('Synchronizing database schema (SQLite)...');
+    await migrate(db, { migrationsFolder: path.resolve(__dirname, '../drizzle') });
+    console.log('Database schema synchronized successfully!');
+  } catch (err: any) {
+    console.error('Failed to synchronize database schema:', err.message);
+  }
+}
 
 const app = express();
 const port = process.env.PORT || 3000;
