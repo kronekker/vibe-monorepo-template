@@ -285,8 +285,11 @@ async function main() {
 
   if (runInstall) {
     const sInst = spinner();
-    const backendPm = deps.bun.available ? 'bun install' : 'npm install';
-    const frontendPm = 'npm install'; // Angular CLI natively uses NPM and avoids Windows lifecycle bugs in Bun (e.g. msgpackr-extract)
+    // Always use npm install for setup. Drizzle Kit runs under Node and requires 
+    // a standard Node module resolution structure, which Bun install on Windows can break.
+    // Bun executes the backend server perfectly from NPM's node_modules.
+    const backendPm = 'npm install';
+    const frontendPm = 'npm install';
     
     sInst.start(`[Backend] Running "${backendPm}" in "${backendDir}"...`);
     try {
@@ -305,7 +308,7 @@ async function main() {
 
       if (runMigrate) {
         const sMig = spinner();
-        const runCmd = deps.bun.available ? 'bun run db:push' : 'npm run db:push';
+        const runCmd = 'npm run db:push';
         sMig.start(`[Database] Running "${runCmd}" in "${backendDir}"...`);
         try {
           execSync(runCmd, { cwd: backendDir, stdio: 'pipe', shell: true });
