@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export NG_DISABLE_VERSION_CHECK=1
+
 echo "--------------------------------------------------"
 echo "⚡ Building & Serving Production Bundle ⚡"
 echo "--------------------------------------------------"

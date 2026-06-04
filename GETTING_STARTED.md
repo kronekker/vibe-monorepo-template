@@ -57,8 +57,12 @@ Once the wizard completes, return to the root directory. You can launch both you
   ./serve-dev.ps1
   ```
 * **On macOS/Linux (Bash)**:
+  Make the scripts executable first:
   ```bash
-  chmod +x serve-dev.sh
+  chmod +x serve-dev.sh serve-prod.sh
+  ```
+  Then launch the dev servers:
+  ```bash
   ./serve-dev.sh
   ```
 

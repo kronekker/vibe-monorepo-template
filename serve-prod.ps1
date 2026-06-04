@@ -1,3 +1,4 @@
+$env:NG_DISABLE_VERSION_CHECK = 1
 # Write header
 Write-Host "--------------------------------------------------" -ForegroundColor Cyan
 Write-Host "⚡ Building & Serving Production Bundle ⚡" -ForegroundColor Cyan

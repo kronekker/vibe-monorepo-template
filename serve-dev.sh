@@ -4,6 +4,8 @@
 FE_PORT=4200
 BE_PORT=3000
 
+export NG_DISABLE_VERSION_CHECK=1
+
 echo "--------------------------------------------------"
 echo "⚡ Starting Vibe Monorepo Dev Servers ⚡"
 echo "--------------------------------------------------"
