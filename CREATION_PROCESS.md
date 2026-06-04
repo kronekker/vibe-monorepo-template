@@ -51,3 +51,7 @@ This document serves as a historical record of the design decisions, architectur
   **Resolution**: Configured the customization CLI to always build the `node_modules` folders for *both* frontend and backend using **`npm install`**. We removed `better-sqlite3` completely. The setup CLI now detects the driver:
   - If **SQLite**: Skips manual database pushes; tables synchronize automatically on backend startup using pre-compiled SQL files in `backend/drizzle/`.
   - If **PostgreSQL**: Prompts the developer to run `npm run db:push:pg` (which uses pure JS drivers and is fully compile-free).
+
+### Step 3: Platform Cross-Compatibility & Environment Tuning (2026-06-03)
+* **Linux Permissions Bugfix**: Set execution permissions directly in the Git repository index (`chmod +x` file mode `100755`) for `serve-dev.sh` and `serve-prod.sh`. This ensures Unix/Linux developers clone the scripts as executable by default.
+* **Angular CLI Version Mismatch Bugfix**: Addressed an issue where Angular CLI refused to start compiling on Linux setups running Node.js minor versions slightly out of sync with Angular's engines (e.g., Node `v24.14.0` on Fedora). Injected `NG_DISABLE_VERSION_CHECK=1` into all dev/prod run scripts (`serve-dev.sh`, `serve-dev.ps1`, `serve-prod.sh`, and `serve-prod.ps1`) to bypass these warnings safely.
