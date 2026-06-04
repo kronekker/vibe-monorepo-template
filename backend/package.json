@@ -1,5 +1,5 @@
 {
-  "name": "vibe-backend",
+  "name": "vibe-app-backend",
   "version": "1.0.0",
   "description": "Express backend server running on Bun with Drizzle ORM",
   "main": "src/index.ts",

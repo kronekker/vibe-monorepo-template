@@ -1,0 +1,10 @@
+<div class="vb-flex-col vb-gap-1">
+  <label class="vb-label">Select Theme</label>
+  <select class="vb-input" style="width: 100%; appearance: auto;" (change)="onThemeChange($event)">
+    @for (theme of themeService.themes; track theme.value) {
+      <option [value]="theme.value" [selected]="theme.value === themeService.currentTheme()">
+        {{ theme.label }}
+      </option>
+    }
+  </select>
+</div>

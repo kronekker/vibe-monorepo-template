@@ -55,3 +55,9 @@ This document serves as a historical record of the design decisions, architectur
 ### Step 3: Platform Cross-Compatibility & Environment Tuning (2026-06-03)
 * **Linux Permissions Bugfix**: Set execution permissions directly in the Git repository index (`chmod +x` file mode `100755`) for `serve-dev.sh` and `serve-prod.sh`. This ensures Unix/Linux developers clone the scripts as executable by default.
 * **Angular CLI Version Mismatch Bugfix**: Addressed an issue where Angular CLI refused to start compiling on Linux setups running Node.js minor versions slightly out of sync with Angular's engines (e.g., Node `v24.14.0` on Fedora). Injected `NG_DISABLE_VERSION_CHECK=1` into all dev/prod run scripts (`serve-dev.sh`, `serve-dev.ps1`, `serve-prod.sh`, and `serve-prod.ps1`) to bypass these warnings safely.
+
+### Step 4: Frontend Layout, Routing, and Theming Refactor (2026-06-04)
+* **Routing Architecture**: Configured Angular's `RouterModule` to handle discrete views rather than a single monolith page. Split the default monolith into a `Starter` component (default route `/`) and a `Demo` component (`/demo`) for showcasing widgets and typography.
+* **Collapsible Side Navigation Layout**: Rewrote the main `App` layout to employ a flexbox-based side navigation. Added state (`isSidebarOpen`) and logic to dynamically transition the sidebar width between an expanded state (250px) and a collapsed icon-only state (72px), enhancing available screen real estate.
+* **Component Extraction**: Extracted the theme selector into a standalone `<app-theme-selector>` component, making it highly portable. When the side navigation is collapsed, the component is dynamically swapped for an intuitive gear icon.
+* **Expanded Theme Capabilities**: Updated `theme.service.ts` and `styles.css` to support three new custom dynamic themes: OLED (true black), Solar (warm, low-contrast), and Cyberpunk (neon, high-contrast), complete with an updated dropdown selector in the UI.

@@ -1,7 +1,7 @@
 {
-  "name": "vibe-monorepo-template",
+  "name": "vibe-app",
   "version": "1.0.0",
-  "description": "Full-stack monorepo template for rapid development with Bun, Express, and Angular.",
+  "description": "A vibe-coded fullstack monorepo application",
   "scripts": {
     "bootstrap": "npm install --prefix cli && npm start --prefix cli",
     "dev": "powershell -File ./serve-dev.ps1",

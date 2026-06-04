@@ -1,0 +1,47 @@
+@if (error()) {
+  <div class="vb-card vb-mb-4" style="border-color: var(--color-error); background-color: var(--color-error); color: white;">
+    <strong>Error:</strong> {{ error() }}
+  </div>
+}
+
+<div class="vb-grid vb-grid-cols-2">
+  
+  <!-- Add User Section -->
+  <section class="vb-card vb-card-hoverable">
+    <h2 style="margin-top: 0;">Add User</h2>
+    <div class="vb-flex-col vb-gap-4">
+      <div>
+        <label class="vb-label">Name</label>
+        <input class="vb-input" type="text" #nameInput placeholder="John Doe" />
+      </div>
+      <div>
+        <label class="vb-label">Email</label>
+        <input class="vb-input" type="email" #emailInput placeholder="john@example.com" />
+      </div>
+      <button class="vb-btn vb-btn-primary" style="margin-top: var(--space-2);" (click)="addUser(nameInput, emailInput)">
+        Add User
+      </button>
+    </div>
+  </section>
+
+  <!-- User List Section -->
+  <section class="vb-card vb-card-hoverable">
+    <h2 style="margin-top: 0;">User List</h2>
+    <div class="vb-flex-col vb-gap-2">
+      @for (user of users(); track user.id) {
+        <div class="vb-flex vb-flex-between" style="padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border);">
+          <div>
+            <div style="font-weight: 500;">{{ user.name }}</div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">{{ user.email }}</div>
+          </div>
+          <div style="font-size: var(--text-sm); color: var(--color-text-muted);">
+            {{ user.createdAt }}
+          </div>
+        </div>
+      } @empty {
+        <div style="color: var(--color-text-muted); font-style: italic;">No users in database yet. Add one!</div>
+      }
+    </div>
+  </section>
+
+</div>

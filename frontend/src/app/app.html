@@ -1,53 +1,76 @@
-<div>
-  @if (appInfo()) {
-    <h1>{{ appInfo()?.name }}</h1>
-    <p>{{ appInfo()?.subtitle }}</p>
-  } @else {
-    <h1>Loading App Info...</h1>
-  }
+<div class="vb-flex" style="min-height: 100vh;">
+  <!-- Side Navigation -->
+  <nav class="vb-flex-col vb-gap-4"
+    style="border-right: 1px solid var(--color-border); padding: var(--space-4); background-color: var(--color-surface); transition: width 0.3s ease; overflow: hidden;"
+    [style.width]="isSidebarOpen() ? '250px' : '72px'">
 
-  @if (error()) {
-    <div style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0;">
-      <strong>Error:</strong> {{ error() }}
-    </div>
-  }
-
-  <section>
-    <h2>Add User</h2>
-    <div>
-      <label>Name: </label>
-      <input type="text" #nameInput placeholder="John Doe" />
-    </div>
-    <div style="margin-top: 5px;">
-      <label>Email: </label>
-      <input type="email" #emailInput placeholder="john@example.com" />
-    </div>
-    <button style="margin-top: 10px;" (click)="addUser(nameInput, emailInput)">Add User</button>
-  </section>
-
-  <section style="margin-top: 20px;">
-    <h2>User List</h2>
-    <ul>
-      @for (user of users(); track user.id) {
-        <li>
-          <strong>{{ user.name }}</strong> &lt;{{ user.email }}&gt;
-          <small style="color: gray; margin-left: 10px;">Created: {{ user.createdAt }}</small>
-        </li>
-      } @empty {
-        <li>No users in database yet. Add one above!</li>
+    <div
+      style="padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; align-items: center;"
+      [style.justify-content]="isSidebarOpen() ? 'space-between' : 'center'">
+      @if (isSidebarOpen()) {
+      <div style="white-space: nowrap; overflow: hidden; margin-right: var(--space-2);">
+        @if (appInfo()) {
+        <h2 style="margin-bottom: 0; font-size: var(--text-lg);">{{ appInfo()?.name }}</h2>
+        } @else {
+        <h2 style="margin-bottom: 0; font-size: var(--text-lg);">Loading...</h2>
+        }
+      </div>
       }
-    </ul>
-  </section>
+      <button class="vb-btn vb-btn-secondary" style="padding: var(--space-1) var(--space-2); min-width: auto;"
+        (click)="toggleSidebar()">
+        <span style="font-size: 1.2rem;">{{ isSidebarOpen() ? '◀' : '☰' }}</span>
+      </button>
+    </div>
 
-  @if (appInfo()) {
-    <hr style="margin-top: 30px;" />
-    <footer>
-      <h3>System Diagnostics</h3>
-      <ul>
-        <li><strong>Version:</strong> {{ appInfo()?.version }}</li>
-        <li><strong>Runtime Environment:</strong> {{ appInfo()?.runtime }}</li>
-        <li><strong>Database Driver:</strong> {{ appInfo()?.dbType }}</li>
-      </ul>
+    <div class="vb-flex-col vb-gap-2">
+      <a routerLink="/" routerLinkActive="vb-btn-primary" [routerLinkActiveOptions]="{exact: true}"
+        class="vb-btn vb-btn-secondary" [style.justify-content]="isSidebarOpen() ? 'flex-start' : 'center'"
+        style="white-space: nowrap; overflow: hidden; width: 100%;">
+        <span>🏠</span>
+        @if (isSidebarOpen()) { <span style="margin-left: var(--space-2);">Starter Page</span> }
+      </a>
+      <a routerLink="/demo" routerLinkActive="vb-btn-primary" class="vb-btn vb-btn-secondary"
+        [style.justify-content]="isSidebarOpen() ? 'flex-start' : 'center'"
+        style="white-space: nowrap; overflow: hidden; width: 100%;">
+        <span>🎨</span>
+        @if (isSidebarOpen()) { <span style="margin-left: var(--space-2);">UI Demo</span> }
+      </a>
+    </div>
+
+    <!-- Theme Selector pinned to bottom -->
+    <div
+      style="margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--color-border); overflow: hidden; white-space: nowrap;">
+      @if (isSidebarOpen()) {
+      <app-theme-selector></app-theme-selector>
+      } @else {
+      <div style="text-align: center; font-size: 1.2rem; cursor: pointer;" title="Theme (Expand to change)"
+        (click)="toggleSidebar()">
+        ⚙️
+      </div>
+      }
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main style="flex: 1; padding: var(--space-6); overflow-y: auto; display: flex; flex-direction: column;">
+    <header class="vb-mb-6" style="padding-bottom: var(--space-4);">
+      @if (appInfo()) {
+      <h1 style="margin-bottom: 0;">{{ appInfo()?.name }}</h1>
+      <p style="color: var(--color-text-muted);">{{ appInfo()?.subtitle }}</p>
+      } @else {
+      <h1 style="margin-bottom: 0;">Loading...</h1>
+      }
+    </header>
+
+    <div style="flex: 1;">
+      <router-outlet></router-outlet>
+    </div>
+
+    @if (appInfo()) {
+    <footer class="vb-mt-6"
+      style="text-align: center; color: var(--color-text-muted); padding-top: var(--space-4); border-top: 1px solid var(--color-border); font-size: var(--text-sm);">
+      <p>Powered by {{ appInfo()?.name }} / Vibe Architecture</p>
     </footer>
-  }
+    }
+  </main>
 </div>

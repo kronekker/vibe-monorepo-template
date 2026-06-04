@@ -2,7 +2,7 @@
 
 # Dev Port Configurations (CLI will update these)
 FE_PORT=4200
-BE_PORT=3000
+BE_PORT=3020
 
 export NG_DISABLE_VERSION_CHECK=1
 
