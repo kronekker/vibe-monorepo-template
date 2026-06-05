@@ -5,9 +5,11 @@ import * as fs from 'fs';
 import apiRouter from './routes/api';
 import { db } from './db';
 import { migrate } from 'drizzle-orm/bun-sqlite/migrator';
+import { Secrets } from './secrets';
 
 // Run programmatic SQLite migrations at startup under Bun
-if (process.env.DB_TYPE === 'sqlite' || !process.env.DB_TYPE) {
+const dbType = Secrets.resolveSecret('DB_TYPE');
+if (dbType === 'sqlite' || !dbType) {
   try {
     console.log('Synchronizing database schema (SQLite)...');
     await migrate(db, { migrationsFolder: path.resolve(__dirname, '../drizzle') });
@@ -18,7 +20,7 @@ if (process.env.DB_TYPE === 'sqlite' || !process.env.DB_TYPE) {
 }
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Secrets.resolveSecret('PORT') || 3000;
 
 app.use(cors());
 app.use(express.json());

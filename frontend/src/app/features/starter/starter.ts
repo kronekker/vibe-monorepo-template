@@ -28,7 +28,7 @@ export class Starter implements OnInit {
           this.error.set(res.error || 'Failed to fetch users.');
         }
       },
-      error: (err) => this.error.set(err.message)
+      error: (err: any) => this.error.set(err.error?.error || err.message)
     });
   }
 
@@ -51,7 +51,7 @@ export class Starter implements OnInit {
           alert(`Error: ${res.error}`);
         }
       },
-      error: (err) => alert(`HTTP Error: ${err.message}`)
+      error: (err: any) => alert(`HTTP Error: ${err.error?.error || err.message}`)
     });
   }
 
@@ -72,9 +72,9 @@ export class Starter implements OnInit {
           this.error.set(res.error || 'Failed to run python script.');
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         this.isPythonRunning.set(false);
-        this.error.set(err.message);
+        this.error.set(err.error?.error || err.message);
       }
     });
   }
