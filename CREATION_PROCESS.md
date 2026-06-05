@@ -9,22 +9,27 @@ This document serves as a historical record of the design decisions, architectur
 ### 1. The Monorepo Choice
 * **Decision**: Single repository containing `frontend`, `backend`, and `shared`.
 * **Rationale**: For modern, fast-paced "vibe-coded" development, maintaining separate repositories adds unnecessary friction (multiple git origins, independent versioning, synchronizing type changes). A monorepo lets developers make atomic changes to frontend, backend, and types in a single commit.
+* **Benefit** Having a single place to orchestrate all processes allows us to build tools like the CLI setup wizard which can be run before any other tools are installed. This also means AI agents can implement features across the stack using shared skills that enforce design decisions
 
 ### 2. Express on Bun (Backend)
 * **Decision**: Express is used as the API framework, run inside the Bun runtime.
 * **Rationale**: While Bun has ultra-fast native frameworks (like ElysiaJS), Express has the largest codebase ecosystem, the most mature documentation, and the highest level of competence among AI code generators. Running Express inside Bun gives us the best of both worlds: high compatibility/productivity and the performance speedups of the Bun JavaScript runtime.
+* **Benefit** Bun is a solid choice with some caveats in more complex implementation, but it's easy to convert the backend to npm and node if needed if those limitations are reached.
 
 ### 3. Isolated TUI CLI Setup Wizard
 * **Decision**: The CLI wizard resides in `cli/` with its own `package.json` and runs via Node.js + `tsx` (TypeScript Execute).
 * **Rationale**: The CLI needs to run *before* the developer has installed Bun, Angular CLI, or other tools. By building it as an isolated project that runs on plain Node/NPM, the bootstrap process requires zero global pre-requisites other than Node. It can then verify and install other tools (like Bun and Angular CLI) on behalf of the developer.
+* **Benefit** Makes explicit the decisions that are intended to be made for personalization into the app or your own custom starter template repository.
 
 ### 4. Shared TS Contracts
 * **Decision**: A simple folder `/shared` containing TypeScript files mapped in compiler settings via paths (`@shared/*`).
 * **Rationale**: Many full-stack frameworks require publishing shared types to private registries or configuring complex package workspaces (npm/yarn/pnpm workspaces). Using simple compiler path mapping allows both IDE autocomplete and build engines to immediately pick up shared changes without running a build or publish step.
+* **Benefit**: Allows AI coding agents to easily reference and use shared types in the frontend and backend code without needing to understand the complex build configurations of monorepos. This also means hallucinations across types during AI implementation can be caught at compile time instead of an obscure runtime error later down the line. This also prevents the AI from hallucinating type implementations in files where they don't exist.
 
 ### 5. Drizzle ORM + SQLite (Default)
 * **Decision**: Drizzle ORM configured with a local SQLite database file (`dev.db`) by default.
 * **Rationale**: We wanted a database experience that works immediately after cloning without requiring Docker or a running Postgres instance. Drizzle ORM is lightweight and provides an identical query syntax for SQLite and Postgres, making it trivial for developers to shift to PostgreSQL when ready (documented in `DATABASE_SETUP.md`).
+* **Benefit** Drizzle ORM's syntax is almost identical to TypeORM, a very popular ORM that is widely used in Angular projects. This makes it easy for developers to switch to Drizzle ORM if they are familiar with TypeORM. It's also straightforward to convert to different databasae backends like postgres,mysql, or cloudflare db, including cloud hosted versions of these when the time comes.
 
 ---
 
