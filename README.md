@@ -52,27 +52,29 @@ This project is a boilerplate template designed to be cloned and customized inst
 
 ## 🚀 Quick Start
 
-1. **Clone the template and redirect origins**:
+Get your development environment up and running in minutes. For detailed prerequisites, setup options, and database initialization instructions, see the full [Getting Started Guide](GETTING_STARTED.md).
+
+1. **Clone the template & configure remotes**:
    ```bash
-   # Clone this template into your custom directory name
    git clone https://github.com/kronekker/vibe-monorepo-template.git my-new-app
-   
-   # Move into the folder
    cd my-new-app
-   
-   # Point origin to your own remote repository
-   git remote set-url origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+   # Option: git remote set-url origin <your-repo-url>
    ```
-2. **Navigate into the CLI folder** and install bootstrap dependencies:
+
+2. **Run the Setup Wizard** to configure ports and install dependencies:
    ```bash
    cd cli
    npm install
-   ```
-3. **Launch the Setup Wizard** to configure your project names, ports, and install dependencies:
-   ```bash
    npm start
    ```
-4. **Run the Development Servers** from the project root:
+
+3. **Initialize the Database** (SQLite by default):
+   ```bash
+   # Run from the root directory
+   npm run db:push --prefix backend
+   ```
+
+4. **Launch the Development Servers**:
    * **Windows (PowerShell)**:
      ```powershell
      ./serve-dev.ps1
@@ -83,7 +85,33 @@ This project is a boilerplate template designed to be cloned and customized inst
      ./serve-dev.sh
      ```
 
-Your unstyled template dashboard will open automatically on `http://localhost:4200` (or your configured port), communicating with the backend Express API server at `http://localhost:3000` via proxy.
+Your template dashboard will open automatically on `http://localhost:4200` (or your configured port), proxying requests to the backend Express server.
+
+---
+
+## 🤖 AI Coding Agent Posture
+
+This template is built from the ground up to be **AI-first**. Modern development is increasingly collaborative, partnering human intent with the rapid execution of AI coding agents (such as Cursor, Antigravity, Windsurf, and Copilot). However, this new paradigm introduces a unique challenge: **architectural entropy**. 
+
+When multiple AI models, versions, and prompting styles touch a codebase over time, they inject their own biases and generic training data defaults. One model might write utility-first Tailwind CSS classes, while another introduces a complex CSS-in-JS library; one might use legacy Angular RxJS patterns, while another uses modern Signals. Without strict guardrails, codebases quickly devolve into a fragmented mosaic of conflicting patterns.
+
+### The Value of an Opinionated Architecture
+To counteract this, the Vibe Monorepo Template establishes an **opinionated architectural stack**. In software engineering, "opinions" are decisions made in advance to eliminate choice paralysis. 
+
+Here is the philosophical truth: **the specific opinions chosen are less critical than the commitment to consistency itself.** 
+
+Whether you prefer SQLite or PostgreSQL, Express or Elysia, vanilla CSS or preprocessors—having a predefined, uniform blueprint is what allows a codebase to remain clean, understandable, and maintainable. Consistency is the anchor that prevents architectural drift.
+
+### How the Template is Designed for AI Alignment
+By standardizing these patterns, we make the codebase highly amenable to AI coding agents in two major ways:
+
+* **Leveraging LLM Competency ([CREATION_PROCESS.md](CREATION_PROCESS.md))**:
+  As documented in the [Creation Process Log](CREATION_PROCESS.md), key design choices were selected to align with AI strengths. For example, we chose **Express** over more modern but obscure frameworks because Express possesses the largest training corpus in existence. AI models generate Express code with exceptionally high correctness and security. Similarly, utilizing simple TypeScript path-mappings (`@shared/*`) instead of complex monorepo workspaces removes toolchain friction that often confuses agents.
+
+* **Modular Context Injection ([AI-ASSISTANCE.md](AI-ASSISTANCE.md) & [skills/](skills))**:
+  Rather than relying on generic LLM behaviors, this template implements a dedicated [skills/](skills) directory. These modular markdown files act as architectural instruction sets for the AI. As detailed in the [AI-Assisted Developer Guide](AI-ASSISTANCE.md), developers can reference these files (using tools like Cursor `@-mentions` or Windsurf context anchors) to constrain the AI's outputs. This ensures that the generated code conforms exactly to local styling systems (like the `vb-` CSS classes outlined in [UI-STYLING.md](skills/UI-STYLING.md)) and standalone Angular architectures, preventing the introduction of redundant libraries or style variations.
+
+By setting up these explicit boundaries, you allow AI agents to operate at peak efficiency—producing code that looks, feels, and performs as if it were written by a single, cohesive engineering team.
 
 ---
 
