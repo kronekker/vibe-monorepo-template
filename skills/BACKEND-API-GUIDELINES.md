@@ -18,12 +18,13 @@ One of the biggest advantages of this monorepo is the `shared/` directory.
   import { UserDTO } from '@shared/types';
   ```
 
-## Development Workflow
+## Consuming APIs on the Frontend
 
-- The backend runs via `bun run dev` (configured in the `backend/package.json`). 
-- Alternatively, use the root-level scripts (`serve-dev.sh` / `serve-dev.ps1`) to run both the backend and frontend concurrently.
-- No compilation step is required for TypeScript files, as Bun executes `.ts` natively.
+To maintain separation of concerns and centralize API communication:
+- **Do not** make HTTP requests (e.g., direct calls to `HttpClient`'s `get`, `post`, etc.) directly inside UI components.
+- **Centralize calling logic**: Define all API integration logic as methods inside the central frontend/src/app/core/services/backend.service.ts.
+- **Component Access**: Components should inject BackendService and call its methods to fetch or send data, ensuring consistent error handling and type safety.
 
 ## Middleware
-- Use standard Express middleware (e.g., `cors`, `express.json()`). 
+- Use existing standard Express middleware (e.g., `cors`, `express.json()`). 
 - When building new endpoints, always validate request bodies and parameters.
