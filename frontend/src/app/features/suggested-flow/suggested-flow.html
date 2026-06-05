@@ -79,6 +79,31 @@
           </li>
         </ul>
       </div>
+
+      <!-- AI Automation Callout -->
+      <div class="vb-card" style="background-color: var(--color-surface); border: 1px solid var(--color-border);">
+        <h3 style="color: var(--color-primary); margin-bottom: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+          <span>🤖</span> Want your coding agent to handle this for you?
+        </h3>
+        <p class="vb-mb-3" style="color: var(--color-text-muted);">
+          You don't have to perform these steps manually. This template is equipped with a dedicated skill guide at 
+          <code>skills/INITIAL-FLOW.md</code> designed specifically to orchestrate this setup.
+        </p>
+        <div class="vb-alert vb-alert-info">
+          <div>
+            <strong>How to use:</strong> Point your AI coding assistant (like Cursor, Windsurf, Copilot, or Cline) to the 
+            <code>skills/INITIAL-FLOW.md</code> file in your workspace, and prompt it: 
+            <br>
+            <em style="display: inline-block; margin-top: var(--space-2); color: var(--color-text-main); font-weight: 500;">
+              "Read skills/INITIAL-FLOW.md and execute the initial branding and cleanup tasks."
+            </em>
+          </div>
+        </div>
+        <p style="margin-top: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted);">
+          The agent will automatically process the branding configuration, configure your clean routes in 
+          <code>frontend/src/app/app.routes.ts</code>, remove demo templates, and set up the foundation for your new workspace layout.
+        </p>
+      </div>
     </div>
   </div>
 </div>
