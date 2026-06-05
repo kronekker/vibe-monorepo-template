@@ -102,6 +102,10 @@ Here is the philosophical truth: **the specific opinions chosen are less critica
 
 Whether you prefer SQLite or PostgreSQL, Express or Elysia, vanilla CSS or preprocessors—having a predefined, uniform blueprint is what allows a codebase to remain clean, understandable, and maintainable. Consistency is the anchor that prevents architectural drift.
 
+Any software engineer or new vibe coder with some experience has experienced this entropy.  The initial 'zero-shot' success of AI coding agents is compelling, and this AI coding competence can last into future iterations of development.  But there inevitably comes a point when a dev has multiple projects, or AI models touch the codebase over time, and the codebase begins to devolve into a fragmented mosaic of conflicting patterns.  This is what we mean by 'architectural entropy'.  A little intelligent encoded opionions at the outset doesn't slow down the development process, in fact, it speeds it up in both the short and long run.  The early consideration and commitment to branding and styling also means your growing body of software has a consistent identity and a shared architectural underpinning that makes reasoning through the code bases easier for your team and coding agents. Testing done via a dozen new or rewrite projects has shown that using this template as a starting point also means that cheaper, lower rated llm's can produce quality code with about the same or less token usage compared to projects started from scratch. These factors are significant for maintaining development velocity and costs. 
+
+This template is self-referential in that it serves as it's own context and skills, the code itself acting as templatized examples for your apps features and abilities to draw from consistently, without needing to prompt for the basics of architecture and styling over and over again.
+
 ### How the Template is Designed for AI Alignment
 By standardizing these patterns, we make the codebase highly amenable to AI coding agents in two major ways:
 
