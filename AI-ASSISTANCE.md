@@ -36,6 +36,8 @@ The [skills/](file:///home/danielbellard/kronekker/my-new-app/skills) folder con
 | **[DATABASE-USAGE.md](file:///home/danielbellard/kronekker/my-new-app/skills/DATABASE-USAGE.md)** | Guides on integrating database operations on the Express server. | Ensure DB models, seeders, and routes follow backend repository structure. |
 | **[BACKEND-API-GUIDELINES.md](file:///home/danielbellard/kronekker/my-new-app/skills/BACKEND-API-GUIDELINES.md)** | Structure for Express router paths and responses. | Standardize routing rules, JSON serialization, and error code layouts. |
 | **[PYTHON-INTEGRATION.md](file:///home/danielbellard/kronekker/my-new-app/skills/PYTHON-INTEGRATION.md)** | Safe execution of Python subprocesses inside backend handlers. | Use `execFile` or `spawn` to prevent command-injection vulnerabilities. |
+| **[INITIAL-FLOW.md](file:///home/danielbellard/kronekker/my-new-app/skills/INITIAL-FLOW.md)** | Step-by-step branding, routing customization, and template cleanup guide. | Safely delete demo/suggested-flow components, update logos, and configure base routing. |
+
 
 ---
 
