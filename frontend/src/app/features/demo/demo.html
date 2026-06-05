@@ -1,4 +1,10 @@
 <div class="vb-flex-col vb-gap-6">
+  <div class="vb-alert vb-alert-info">
+    <div>
+      <strong>Design System Compendium:</strong> This component serves as a comprehensive lexicon of the pre-established design system, manifesting the breadth of intrinsic UI styling and structural paradigms available within this architecture. It is intentionally provisioned as an instructive reference that can be elegantly leveraged by an AI coding agent to autonomously synthesize congruent UI elements. Furthermore, developers orchestrating their own applications may seamlessly excise this demonstration from the navigation hierarchy by adjusting the foundational routing configuration to accommodate their bespoke products.
+    </div>
+  </div>
+
   <section class="vb-card">
     <h2 style="margin-top: 0;">Typography</h2>
     <h1>Heading 1</h1>
@@ -48,6 +54,53 @@
       <div class="vb-card vb-card-hoverable">
         <h3 style="margin-top: 0;">Card 3</h3>
         <p>Hoverable card content</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="vb-card">
+    <h2 style="margin-top: 0;">Alerts</h2>
+    <div class="vb-flex-col vb-gap-4">
+      <div class="vb-alert vb-alert-info">
+        <strong>Info:</strong> This is an informational alert.
+      </div>
+      <div class="vb-alert vb-alert-success">
+        <strong>Success:</strong> Action completed successfully!
+      </div>
+      <div class="vb-alert vb-alert-warning">
+        <strong>Warning:</strong> Please check your input before proceeding.
+      </div>
+      <div class="vb-alert vb-alert-error">
+        <strong>Error:</strong> Something went wrong during the process.
+      </div>
+    </div>
+  </section>
+
+  <section class="vb-card">
+    <h2 style="margin-top: 0;">Spinners & Progress</h2>
+    <div class="vb-flex-col vb-gap-6">
+      <div>
+        <h3 style="margin-top: 0; margin-bottom: var(--space-4);">Spinners</h3>
+        <div class="vb-flex vb-gap-4 vb-flex-center" style="justify-content: flex-start;">
+          <div class="vb-spinner vb-spinner-sm"></div>
+          <div class="vb-spinner"></div>
+          <div class="vb-spinner vb-spinner-lg"></div>
+        </div>
+      </div>
+      
+      <div>
+        <h3 style="margin-top: 0; margin-bottom: var(--space-4);">Progress Bars</h3>
+        <div class="vb-flex-col vb-gap-4">
+          <div class="vb-progress">
+            <div class="vb-progress-bar" style="width: 25%;"></div>
+          </div>
+          <div class="vb-progress">
+            <div class="vb-progress-bar" style="width: 60%;"></div>
+          </div>
+          <div class="vb-progress">
+            <div class="vb-progress-bar" style="width: 100%;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

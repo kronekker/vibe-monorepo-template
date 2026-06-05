@@ -8,7 +8,12 @@
       style="padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); display: flex; align-items: center;"
       [style.justify-content]="isSidebarOpen() ? 'space-between' : 'center'">
       @if (isSidebarOpen()) {
-      <div style="white-space: nowrap; overflow: hidden; margin-right: var(--space-2);">
+      <div
+        style="white-space: nowrap; overflow: hidden; margin-right: var(--space-2); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2);">
+        <a href="https://github.com/kronekker/vibe-monorepo-template" target="_blank" rel="noopener noreferrer"
+          style="display: inline-block; line-height: 0;">
+          <img src="logo.png" alt="Logo" style="height: 30px;width: 145px;object-fit: contain;">
+        </a>
         @if (appInfo()) {
         <h2 style="margin-bottom: 0; font-size: var(--text-lg);">{{ appInfo()?.name }}</h2>
         } @else {
@@ -34,6 +39,12 @@
         style="white-space: nowrap; overflow: hidden; width: 100%;">
         <span>🎨</span>
         @if (isSidebarOpen()) { <span style="margin-left: var(--space-2);">UI Demo</span> }
+      </a>
+      <a routerLink="/suggested-flow" routerLinkActive="vb-btn-primary" class="vb-btn vb-btn-secondary"
+        [style.justify-content]="isSidebarOpen() ? 'flex-start' : 'center'"
+        style="white-space: nowrap; overflow: hidden; width: 100%;">
+        <span>🗺️</span>
+        @if (isSidebarOpen()) { <span style="margin-left: var(--space-2);">Suggested Flow</span> }
       </a>
     </div>
 

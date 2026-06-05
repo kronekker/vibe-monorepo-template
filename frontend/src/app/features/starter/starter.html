@@ -4,44 +4,88 @@
   </div>
 }
 
-<div class="vb-grid vb-grid-cols-2">
-  
-  <!-- Add User Section -->
-  <section class="vb-card vb-card-hoverable">
-    <h2 style="margin-top: 0;">Add User</h2>
+<div class="vb-alert vb-alert-info vb-mb-4">
+  <div>
+    <strong>Starter Component:</strong> This page exists to demonstrate that a newly cloned version of this stack works. Developers should replace this component with their own using the routing infrastructure.
+  </div>
+</div>
+
+<!-- Database Integration Section -->
+<section class="vb-card vb-mb-4">
+  <div class="vb-mb-4">
+    <h2 style="margin-top: 0;">Database Integration Demo</h2>
+    <p style="color: var(--color-text-muted); margin-bottom: 0;">
+      This feature demonstrates the use of backend database management. It allows developers to test that a newly cloned and initialized repository has a fully functional database backend flow.
+    </p>
+  </div>
+
+  <div class="vb-grid vb-grid-cols-2">
+    <!-- Add User Section -->
+    <div class="vb-card vb-card-hoverable" style="background-color: var(--color-bg);">
+      <h3 style="margin-top: 0;">Add User</h3>
+      <div class="vb-flex-col vb-gap-4">
+        <div>
+          <label class="vb-label">Name</label>
+          <input class="vb-input" type="text" #nameInput placeholder="John Doe" />
+        </div>
+        <div>
+          <label class="vb-label">Email</label>
+          <input class="vb-input" type="email" #emailInput placeholder="john@example.com" />
+        </div>
+        <button class="vb-btn vb-btn-primary" style="margin-top: var(--space-2);" (click)="addUser(nameInput, emailInput)">
+          Add User
+        </button>
+      </div>
+    </div>
+
+    <!-- User List Section -->
+    <div class="vb-card vb-card-hoverable" style="background-color: var(--color-bg);">
+      <h3 style="margin-top: 0;">User List</h3>
+      <div class="vb-flex-col vb-gap-2">
+        @for (user of users(); track user.id) {
+          <div class="vb-flex vb-flex-between" style="padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border);">
+            <div>
+              <div style="font-weight: 500;">{{ user.name }}</div>
+              <div style="font-size: var(--text-sm); color: var(--color-text-muted);">{{ user.email }}</div>
+            </div>
+            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              {{ user.createdAt }}
+            </div>
+          </div>
+        } @empty {
+          <div style="color: var(--color-text-muted); font-style: italic;">No users in database yet. Add one!</div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Python Integration Section -->
+<section class="vb-card vb-mb-4">
+  <div class="vb-mb-4">
+    <h2 style="margin-top: 0;">Python Integration Demo</h2>
+    <p style="color: var(--color-text-muted); margin-bottom: 0;">
+      This feature demonstrates the ability to execute Python scripts from the Node backend. It allows developers to test that a newly cloned repository has correctly configured its environment to run Python code and return results.
+    </p>
+  </div>
+
+  <div class="vb-card vb-card-hoverable" style="background-color: var(--color-bg);">
     <div class="vb-flex-col vb-gap-4">
       <div>
-        <label class="vb-label">Name</label>
-        <input class="vb-input" type="text" #nameInput placeholder="John Doe" />
+        <label class="vb-label">Script Argument (Optional)</label>
+        <input class="vb-input" type="text" #pythonArgInput placeholder="e.g. testing123" />
       </div>
       <div>
-        <label class="vb-label">Email</label>
-        <input class="vb-input" type="email" #emailInput placeholder="john@example.com" />
+        <button class="vb-btn vb-btn-primary" [disabled]="isPythonRunning()" (click)="runPythonScript(pythonArgInput)">
+          {{ isPythonRunning() ? 'Running...' : 'Run Python Script' }}
+        </button>
       </div>
-      <button class="vb-btn vb-btn-primary" style="margin-top: var(--space-2);" (click)="addUser(nameInput, emailInput)">
-        Add User
-      </button>
-    </div>
-  </section>
-
-  <!-- User List Section -->
-  <section class="vb-card vb-card-hoverable">
-    <h2 style="margin-top: 0;">User List</h2>
-    <div class="vb-flex-col vb-gap-2">
-      @for (user of users(); track user.id) {
-        <div class="vb-flex vb-flex-between" style="padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border);">
-          <div>
-            <div style="font-weight: 500;">{{ user.name }}</div>
-            <div style="font-size: var(--text-sm); color: var(--color-text-muted);">{{ user.email }}</div>
-          </div>
-          <div style="font-size: var(--text-sm); color: var(--color-text-muted);">
-            {{ user.createdAt }}
-          </div>
+      
+      @if (pythonOutput()) {
+        <div style="margin-top: var(--space-2); background-color: var(--color-surface); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--color-border); font-family: monospace; white-space: pre-wrap;">
+          {{ pythonOutput() }}
         </div>
-      } @empty {
-        <div style="color: var(--color-text-muted); font-style: italic;">No users in database yet. Add one!</div>
       }
     </div>
-  </section>
-
-</div>
+  </div>
+</section>

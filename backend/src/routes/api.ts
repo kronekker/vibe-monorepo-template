@@ -1,7 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { db } from '../db';
 import { users } from '../db/schema';
-import { AppInfo, User, ApiResponse, CreateUserRequest } from '@shared/index';
+import { AppInfo, User, ApiResponse, CreateUserRequest, PythonRunRequest, PythonRunResponse } from '@shared/index';
+import { execFile } from 'child_process';
+import * as path from 'path';
 
 const router = Router();
 
@@ -67,6 +69,32 @@ router.post('/users', async (req: Request, res: Response) => {
     };
     res.status(500).json(response);
   }
+});
+
+// POST /api/python-test
+router.post('/python-test', (req: Request, res: Response) => {
+  const { args }: PythonRunRequest = req.body;
+  const scriptPath = path.resolve(__dirname, '../scripts/test.py');
+
+  const processArgs = args || [];
+
+  execFile('python3', [scriptPath, ...processArgs], (error, stdout, stderr) => {
+    if (error) {
+      const response: ApiResponse<never> = {
+        success: false,
+        error: stderr || error.message || 'Failed to execute Python script',
+      };
+      return res.status(500).json(response);
+    }
+    
+    const response: ApiResponse<PythonRunResponse> = {
+      success: true,
+      data: {
+        output: stdout.trim(),
+      },
+    };
+    res.json(response);
+  });
 });
 
 export default router;

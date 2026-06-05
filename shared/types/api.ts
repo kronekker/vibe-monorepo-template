@@ -23,3 +23,11 @@ export interface CreateUserRequest {
   name: string;
   email: string;
 }
+
+export interface PythonRunRequest {
+  args: string[];
+}
+
+export interface PythonRunResponse {
+  output: string;
+}

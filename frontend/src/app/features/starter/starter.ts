@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User, ApiResponse } from '@shared/index';
+import { User, ApiResponse, PythonRunResponse } from '@shared/index';
 
 @Component({
   selector: 'app-starter',
@@ -12,6 +12,8 @@ export class Starter implements OnInit {
 
   protected readonly users = signal<User[]>([]);
   protected readonly error = signal<string | null>(null);
+  protected readonly pythonOutput = signal<string | null>(null);
+  protected readonly isPythonRunning = signal<boolean>(false);
 
   ngOnInit() {
     this.fetchUsers();
@@ -50,6 +52,30 @@ export class Starter implements OnInit {
         }
       },
       error: (err) => alert(`HTTP Error: ${err.message}`)
+    });
+  }
+
+  runPythonScript(argInput: HTMLInputElement) {
+    const arg = argInput.value.trim();
+    const args = arg ? [arg] : [];
+    
+    this.isPythonRunning.set(true);
+    this.pythonOutput.set(null);
+    this.error.set(null);
+
+    this.http.post<ApiResponse<PythonRunResponse>>('/api/python-test', { args }).subscribe({
+      next: (res) => {
+        this.isPythonRunning.set(false);
+        if (res.success && res.data) {
+          this.pythonOutput.set(res.data.output);
+        } else {
+          this.error.set(res.error || 'Failed to run python script.');
+        }
+      },
+      error: (err) => {
+        this.isPythonRunning.set(false);
+        this.error.set(err.message);
+      }
     });
   }
 }
