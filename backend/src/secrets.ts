@@ -1,8 +1,9 @@
 import fs from 'fs';
 
+// see skills/SECRETS-MANAGEMENT.md
 export class Secrets {
-    static resolveSecret(secretKey: string): string | undefined {
-        const fileVarName = `${secretKey}_FILE`;
+    static resolveSecret(envVarName: string): string | undefined {
+        const fileVarName = `${envVarName}_FILE`;
         const secretFilePath = process.env[fileVarName];
 
         if (secretFilePath && fs.existsSync(secretFilePath)) {
@@ -13,7 +14,6 @@ export class Secrets {
             }
         }
 
-        // 2. Fallback to the standard environment variable string
-        return process.env[secretKey];
+        return process.env[envVarName];
     }
 }

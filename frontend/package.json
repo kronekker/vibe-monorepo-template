@@ -1,5 +1,5 @@
 {
-  "name": "vibe-app-frontend",
+  "name": "kronekker-initial-linux-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

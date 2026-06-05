@@ -1,5 +1,5 @@
 {
-  "name": "vibe-app-backend",
+  "name": "kronekker-initial-linux-backend",
   "version": "1.0.0",
   "description": "Express backend server running on Bun with Drizzle ORM",
   "main": "src/index.ts",

@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { db } from '../db';
 import { users } from '../db/schema';
+import { eq } from 'drizzle-orm';
 import { AppInfo, User, ApiResponse, CreateUserRequest, PythonRunRequest, PythonRunResponse } from '@shared/index';
 import { execFile } from 'child_process';
 import * as path from 'path';
@@ -62,6 +63,40 @@ router.post('/users', async (req: Request, res: Response) => {
       data: createdUser,
     };
     res.status(211).json(response);
+  } catch (err: any) {
+    const response: ApiResponse<never> = {
+      success: false,
+      error: err.message,
+    };
+    res.status(500).json(response);
+  }
+});
+
+// DELETE /api/users/:id
+router.delete('/users/:id', async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+
+  if (isNaN(id)) {
+    const response: ApiResponse<never> = {
+      success: false,
+      error: 'Invalid user ID.',
+    };
+    return res.status(400).json(response);
+  }
+
+  try {
+    const result = await db.delete(users).where(eq(users.id, id)).returning();
+    if (result.length === 0) {
+      const response: ApiResponse<never> = {
+        success: false,
+        error: 'User not found.',
+      };
+      return res.status(404).json(response);
+    }
+    const response: ApiResponse<any> = {
+      success: true,
+    };
+    res.json(response);
   } catch (err: any) {
     const response: ApiResponse<never> = {
       success: false,

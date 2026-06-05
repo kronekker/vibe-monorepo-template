@@ -1,6 +1,6 @@
 # Dev Port Configurations (CLI will update these)
 $FE_PORT = 4200
-$BE_PORT = 3020
+$BE_PORT = 3012
 $env:NG_DISABLE_VERSION_CHECK = 1
 
 # Write header

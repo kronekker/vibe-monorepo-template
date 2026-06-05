@@ -1,7 +1,5 @@
 {
-  "name": "vibe-app",
   "version": "1.0.0",
-  "description": "A vibe-coded fullstack monorepo application",
   "scripts": {
     "bootstrap": "npm install --prefix cli && npm start --prefix cli",
     "dev": "powershell -File ./serve-dev.ps1",
@@ -18,5 +16,7 @@
     "typescript"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "name": "kronekker-initial-linux",
+  "description": "initial linux repo copy"
 }
