@@ -9,6 +9,8 @@ import * as path from 'path';
 const router = Router();
 
 // GET /api/info
+// Purpose: Retrieves application metadata, runtime version, and configured database type.
+// Note: Demonstrates initial stack functionality by verifying environment and server config.
 router.get('/info', (req: Request, res: Response) => {
   const info: AppInfo = {
     name: process.env.APP_NAME || 'Vibe Template',
@@ -26,6 +28,8 @@ router.get('/info', (req: Request, res: Response) => {
 });
 
 // GET /api/users
+// Purpose: Fetches all registered users from the database.
+// Note: Demonstrates initial stack functionality (database read connection and Drizzle ORM selection).
 router.get('/users', async (req: Request, res: Response) => {
   try {
     const allUsers = await db.select().from(users);
@@ -44,6 +48,8 @@ router.get('/users', async (req: Request, res: Response) => {
 });
 
 // POST /api/users
+// Purpose: Creates a new user entry in the database.
+// Note: Demonstrates initial stack functionality (database write operations, validation, and schema integration).
 router.post('/users', async (req: Request, res: Response) => {
   const { name, email }: CreateUserRequest = req.body;
 
@@ -73,6 +79,8 @@ router.post('/users', async (req: Request, res: Response) => {
 });
 
 // DELETE /api/users/:id
+// Purpose: Deletes an existing user by their ID.
+// Note: Demonstrates initial stack functionality (ORM deletion queries and route parameter processing).
 router.delete('/users/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
 
@@ -107,6 +115,8 @@ router.delete('/users/:id', async (req: Request, res: Response) => {
 });
 
 // POST /api/python-test
+// Purpose: Triggers execution of a local Python script subprocess and returns its stdout.
+// Note: Demonstrates initial stack functionality (multi-language execution and safe script invocation).
 router.post('/python-test', (req: Request, res: Response) => {
   const { args }: PythonRunRequest = req.body;
   const scriptPath = path.resolve(__dirname, '../scripts/test.py');

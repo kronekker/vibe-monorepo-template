@@ -1,8 +1,8 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppInfo, ApiResponse } from '@shared/index';
 import { ThemeSelectorComponent } from './core/components/theme-selector/theme-selector';
+import { BackendService } from './core/services/backend.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { ThemeSelectorComponent } from './core/components/theme-selector/theme-s
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(BackendService);
 
   // Application State Signals
   protected readonly appInfo = signal<AppInfo | null>(null);
@@ -26,7 +26,7 @@ export class App implements OnInit {
   }
 
   fetchAppInfo() {
-    this.http.get<ApiResponse<AppInfo>>('/api/info').subscribe({
+    this.backendService.getAppInfo().subscribe({
       next: (res) => {
         if (res.success && res.data) {
           this.appInfo.set(res.data);

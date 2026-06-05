@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { User, ApiResponse, PythonRunResponse } from '@shared/index';
+import { BackendService } from '../../core/services/backend.service';
 
 @Component({
   selector: 'app-starter',
@@ -31,7 +31,7 @@ import { User, ApiResponse, PythonRunResponse } from '@shared/index';
   `]
 })
 export class Starter implements OnInit {
-  private readonly http = inject(HttpClient);
+  private readonly backendService = inject(BackendService);
 
   protected readonly users = signal<User[]>([]);
   protected readonly error = signal<string | null>(null);
@@ -43,7 +43,7 @@ export class Starter implements OnInit {
   }
 
   fetchUsers() {
-    this.http.get<ApiResponse<User[]>>('/api/users').subscribe({
+    this.backendService.getUsers().subscribe({
       next: (res) => {
         if (res.success && res.data) {
           this.users.set(res.data);
@@ -64,7 +64,7 @@ export class Starter implements OnInit {
       return;
     }
 
-    this.http.post<ApiResponse<User>>('/api/users', { name, email }).subscribe({
+    this.backendService.addUser(name, email).subscribe({
       next: (res) => {
         if (res.success && res.data) {
           this.users.update(prev => [...prev, res.data!]);
@@ -83,7 +83,7 @@ export class Starter implements OnInit {
       return;
     }
 
-    this.http.delete<ApiResponse<any>>(`/api/users/${id}`).subscribe({
+    this.backendService.deleteUser(id).subscribe({
       next: (res) => {
         if (res.success) {
           this.users.update(prev => prev.filter(user => user.id !== id));
@@ -103,7 +103,7 @@ export class Starter implements OnInit {
     this.pythonOutput.set(null);
     this.error.set(null);
 
-    this.http.post<ApiResponse<PythonRunResponse>>('/api/python-test', { args }).subscribe({
+    this.backendService.runPythonScript(args).subscribe({
       next: (res) => {
         this.isPythonRunning.set(false);
         if (res.success && res.data) {
